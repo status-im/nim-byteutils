@@ -22,7 +22,6 @@ proc `&`*[N1, N2: static[int], T](
   result[0 ..< N1] = a
   result[N1 ..< N2] = b
 
-
 ########################################################################################################
 #####################################   Hex utilities   ################################################
 
@@ -41,8 +40,8 @@ proc skip0xPrefix(hexStr: string): int {.noSideEffect, inline.} =
   if hexStr[0] == '0' and hexStr[1] in {'x', 'X'}:
     result = 2
 
-proc hexToByteArrayBE*(hexStr: string, output: var openArray[byte], fromIdx, toIdx: int) {.noSideEffect.}=
-  ## Read a hex string and store it in a Byte Array `output` in Big-Endian order
+proc hexToByteArray*(hexStr: string, output: var openArray[byte], fromIdx, toIdx: int) {.noSideEffect.}=
+  ## Read a hex string and store it in a byte array `output`. No "endianness" reordering is done.
   var i = skip0xPrefix(hexStr)
 
   assert(fromIdx >= 0 and toIdx >= fromIdx and fromIdx < output.len and toIdx < output.len)
@@ -54,16 +53,16 @@ proc hexToByteArrayBE*(hexStr: string, output: var openArray[byte], fromIdx, toI
     output[fromIdx + i] = hexStr[2*i].readHexChar shl 4 or hexStr[2*i+1].readHexChar
     inc(i)
 
-proc hexToByteArrayBE*(hexStr: string, output: var openArray[byte]) {.inline, noSideEffect.} =
-  ## Read a hex string and store it in a Byte Array `output` in Big-Endian order
-  hexToByteArrayBE(hexStr, output, 0, output.high)
+proc hexToByteArray*(hexStr: string, output: var openArray[byte]) {.inline, noSideEffect.} =
+  ## Read a hex string and store it in a byte array `output`. No "endianness" reordering is done.
+  hexToByteArray(hexStr, output, 0, output.high)
 
-proc hexToByteArrayBE*[N: static[int]](hexStr: string): array[N, byte] {.noSideEffect, noInit, inline.}=
-  ## Read an hex string and store it in a Byte Array in Big-Endian order
-  hexToByteArrayBE(hexStr, result)
+proc hexToByteArray*[N: static[int]](hexStr: string): array[N, byte] {.noSideEffect, noInit, inline.}=
+  ## Read an hex string and store it in a byte array. No "endianness" reordering is done.
+  hexToByteArray(hexStr, result)
 
-proc hexToSeqByteBE*(hexStr: string): seq[byte] {.noSideEffect.}=
-  ## Read an hex string and store it in a sequence of bytes in Big-Endian order
+proc hexToSeqByte*(hexStr: string): seq[byte] {.noSideEffect.}=
+  ## Read an hex string and store it in a sequence of bytes. No "endianness" reordering is done.
   var i = skip0xPrefix(hexStr)
 
   let N = (hexStr.len - i) div 2
@@ -76,6 +75,7 @@ proc hexToSeqByteBE*(hexStr: string): seq[byte] {.noSideEffect.}=
 proc toHexAux(ba: openarray[byte]): string {.noSideEffect.} =
   ## Convert a byte-array to its hex representation
   ## Output is in lowercase
+  ## No "endianness" reordering is done.
   const hexChars = "0123456789abcdef"
 
   let sz = ba.len
@@ -84,13 +84,14 @@ proc toHexAux(ba: openarray[byte]): string {.noSideEffect.} =
     result[2*i] = hexChars[int ba[i] shr 4 and 0xF]
     result[2*i+1] = hexChars[int ba[i] and 0xF]
 
-
 proc toHex*(ba: openarray[byte]): string {.noSideEffect, inline.} =
-  ## Convert a big endian byte-array to its hex representation
+  ## Convert a byte-array to its hex representation
   ## Output is in lowercase
+  ## No "endianness" reordering is done.
   toHexAux(ba)
 
 proc toHex*[N: static[int]](ba: array[N, byte]): string {.noSideEffect, inline.} =
   ## Convert a big endian byte-array to its hex representation
   ## Output is in lowercase
+  ## No "endianness" reordering is done.
   toHexAux(ba)
