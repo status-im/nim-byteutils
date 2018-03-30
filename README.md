@@ -1,6 +1,6 @@
 # byteutils
 [![Build Status (Travis)](https://img.shields.io/travis/status-im/byteutils/master.svg?label=Linux%20/%20macOS "Linux/macOS build status (Travis)")](https://travis-ci.org/status-im/byteutils)
-[![Windows build status (Appveyor)](https://img.shields.io/appveyor/ci/status-im/byteutils/master.svg?label=Windows "Windows build status (Appveyor)")]
+[![Windows build status (Appveyor)](https://img.shields.io/appveyor/ci/status-im/byteutils/master.svg?label=Windows "Windows build status (Appveyor)")](https://ci.appveyor.com/project/jarradh/byteutils)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)[![License: Apache](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 ![Stability: experimental](https://img.shields.io/badge/stability-experimental-orange.svg)
 
