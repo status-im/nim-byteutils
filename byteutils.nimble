@@ -1,7 +1,7 @@
 packageName   = "byteutils"
 version       = "0.0.1"
 author        = "Status Research & Development GmbH"
-description   = ""
+description   = "A library to handle raw bytes and hex representations"
 license       = "MIT or Apache License 2.0"
 srcDir        = "src"
 
