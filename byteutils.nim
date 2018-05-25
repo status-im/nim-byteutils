@@ -73,11 +73,13 @@ func hexToPaddedByteArray*[N: static[int]](hexStr: string): array[N, byte] {.inl
     p = skip0xPrefix(hexStr)
     sz = hexStr.len - p
     maxStrSize = result.len * 2
-  var bIdx, shift: int
+  var
+    bIdx: int
+    shift = 4
 
   doAssert hexStr.len - p <= maxStrSize
   
-  if hexStr.len < maxStrSize:
+  if sz < maxStrSize:
     # include extra byte if odd length
     bIdx = result.len - (sz + 1) div 2   
     # start with shl of 4 if length is even
