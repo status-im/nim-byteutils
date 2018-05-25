@@ -37,10 +37,8 @@ proc readHexChar*(c: char): byte {.noSideEffect, inline.}=
 template skip0xPrefix(hexStr: string): int =
   ## Returns the index of the first meaningful char in `hexStr` by skipping
   ## "0x" prefix
-  if hexStr[0] == '0' and hexStr[1] in {'x', 'X'}:
-    2
-  else:
-    0
+  if hexStr[0] == '0' and hexStr[1] in {'x', 'X'}: 2
+  else: 0
 
 func hexToByteArray*(hexStr: string, output: var openArray[byte], fromIdx, toIdx: int) =
   ## Read a hex string and store it in a byte array `output`. No "endianness" reordering is done.
