@@ -52,3 +52,6 @@ suite "Byte utils":
     block:
       let a = hexToPaddedByteArray[32]("0x68656c6c6f20776f726c64")
       check a.toHex == "00000000000000000000000000000000000000000068656c6c6f20776f726c64"
+    block:
+      expect AssertionError:
+        let a = hexToPaddedByteArray[2]("0x12345")
