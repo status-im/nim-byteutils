@@ -65,6 +65,30 @@ func hexToByteArray*[N: static[int]](hexStr: string): array[N, byte] {.noInit, i
   ## Read an hex string and store it in a byte array. No "endianness" reordering is done.
   hexToByteArray(hexStr, result)
 
+func hexToPaddedByteArray*[N: static[int]](hexStr: string): array[N, byte] {.inline.}=
+  ## Read a hex string and store it in a byte array `output`.
+  ## The string may be shorter than the byte array.
+  ## No "endianness" reordering is done.
+  let
+    p = skip0xPrefix(hexStr)
+    sz = hexStr.len - p
+    maxStrSize = result.len * 2
+  var bIdx, shift: int
+
+  doAssert hexStr.len - p <= maxStrSize
+  
+  if hexStr.len < maxStrSize:
+    # include extra byte if odd length
+    bIdx = result.len - (sz + 1) div 2   
+    # start with shl of 4 if length is even
+    shift = 4 - sz mod 2 * 4
+
+  for sIdx in p ..< hexStr.len:
+    let nibble = hexStr[sIdx].readHexChar shl shift
+    result[bIdx] = result[bIdx] or nibble
+    shift = shift + 4 and 4
+    bIdx += shift shr 2
+
 func hexToSeqByte*(hexStr: string): seq[byte] =
   ## Read an hex string and store it in a sequence of bytes. No "endianness" reordering is done.
   var i = skip0xPrefix(hexStr)
