@@ -5,12 +5,13 @@
 ![Stability: experimental](https://img.shields.io/badge/stability-experimental-orange.svg)
 
 # Introduction
-
+TBP
 
 
 # Installation
 
-You can install the developement version of the library through Nimble, using the following command:
+You can install the developement version of the library through Nimble, with the following command:
+
 nimble install https://github.com/status-im/byteutils@#master
 
 # License
