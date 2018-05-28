@@ -10,7 +10,7 @@
 
 # Installation
 
-You can install the developement version of the library through Nimbl,e with the following command:
+You can install the developement version of the library through Nimble, using the following command:
 nimble install https://github.com/status-im/byteutils@#master
 
 # License
