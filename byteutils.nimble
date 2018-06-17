@@ -3,6 +3,7 @@ version       = "0.0.1"
 author        = "Status Research & Development GmbH"
 description   = "A library to handle raw bytes and hex representations"
 license       = "MIT or Apache License 2.0"
+skipDirs      = @["tests"]
 
 ### Dependencies
 requires "nim >= 0.18.0"
