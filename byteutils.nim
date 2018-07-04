@@ -67,14 +67,14 @@ func hexToByteArray*[N: static[int]](hexStr: string): array[N, byte] {.noInit, i
 
 func hexToSeqByte*(hexStr: string): seq[byte] =
   ## Read an hex string and store it in a sequence of bytes. No "endianness" reordering is done.
-  var i = skip0xPrefix(hexStr)
+  doAssert (hexStr.len and 1) == 0
 
-  let N = (hexStr.len - i) div 2
+  let skip = skip0xPrefix(hexStr)
+  let N = (hexStr.len - skip) div 2
 
   result = newSeq[byte](N)
-  while i < N:
-    result[i] = hexStr[2*i].readHexChar shl 4 or hexStr[2*i+1].readHexChar
-    inc(i)
+  for i in 0 ..< N:
+    result[i] = hexStr[2*i + skip].readHexChar shl 4 or hexStr[2*i + 1 + skip].readHexChar
 
 func toHexAux(ba: openarray[byte]): string =
   ## Convert a byte-array to its hex representation
