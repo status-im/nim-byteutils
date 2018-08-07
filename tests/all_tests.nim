@@ -36,3 +36,22 @@ suite "Byte utils":
     check simpleBArray & simpleBArray ==
       [0x12.byte, 0x34, 0x56, 0x78, 0x12, 0x34, 0x56, 0x78]
 
+  test "hexToPaddedByteArray":
+    block:
+      let a = hexToPaddedByteArray[4]("0x123")
+      check a.toHex == "00000123"
+    block:
+      let a = hexToPaddedByteArray[4]("0x1234")
+      check a.toHex == "00001234"
+    block:
+      let a = hexToPaddedByteArray[4]("0x1234567")
+      check a.toHex == "01234567"
+    block:
+      let a = hexToPaddedByteArray[4]("0x12345678")
+      check a.toHex == "12345678"
+    block:
+      let a = hexToPaddedByteArray[32]("0x68656c6c6f20776f726c64")
+      check a.toHex == "00000000000000000000000000000000000000000068656c6c6f20776f726c64"
+    block:
+      expect AssertionError:
+        let a = hexToPaddedByteArray[2]("0x12345")

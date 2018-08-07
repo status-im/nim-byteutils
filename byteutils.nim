@@ -37,10 +37,8 @@ proc readHexChar*(c: char): byte {.noSideEffect, inline.}=
 template skip0xPrefix(hexStr: string): int =
   ## Returns the index of the first meaningful char in `hexStr` by skipping
   ## "0x" prefix
-  if hexStr[0] == '0' and hexStr[1] in {'x', 'X'}:
-    2
-  else:
-    0
+  if hexStr[0] == '0' and hexStr[1] in {'x', 'X'}: 2
+  else: 0
 
 func hexToByteArray*(hexStr: string, output: var openArray[byte], fromIdx, toIdx: int) =
   ## Read a hex string and store it in a byte array `output`. No "endianness" reordering is done.
@@ -64,6 +62,32 @@ func hexToByteArray*(hexStr: string, output: var openArray[byte]) {.inline.} =
 func hexToByteArray*[N: static[int]](hexStr: string): array[N, byte] {.noInit, inline.}=
   ## Read an hex string and store it in a byte array. No "endianness" reordering is done.
   hexToByteArray(hexStr, result)
+
+func hexToPaddedByteArray*[N: static[int]](hexStr: string): array[N, byte] =
+  ## Read a hex string and store it in a byte array `output`.
+  ## The string may be shorter than the byte array.
+  ## No "endianness" reordering is done.
+  let
+    p = skip0xPrefix(hexStr)
+    sz = hexStr.len - p
+    maxStrSize = result.len * 2
+  var
+    bIdx: int
+    shift = 4
+
+  doAssert hexStr.len - p <= maxStrSize
+  
+  if sz < maxStrSize:
+    # include extra byte if odd length
+    bIdx = result.len - (sz + 1) div 2   
+    # start with shl of 4 if length is even
+    shift = 4 - sz mod 2 * 4
+
+  for sIdx in p ..< hexStr.len:
+    let nibble = hexStr[sIdx].readHexChar shl shift
+    result[bIdx] = result[bIdx] or nibble
+    shift = shift + 4 and 4
+    bIdx += shift shr 2
 
 func hexToSeqByte*(hexStr: string): seq[byte] =
   ## Read an hex string and store it in a sequence of bytes. No "endianness" reordering is done.
