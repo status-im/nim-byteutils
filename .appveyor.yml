@@ -36,9 +36,9 @@ install:
   - IF NOT EXIST "%MINGW_ARCHIVE%" appveyor DownloadFile "%MINGW_URL%" -FileName "%MINGW_ARCHIVE%"
   - 7z x -y "%MINGW_ARCHIVE%" > nul
 
-    # build nim from our own branch - this to avoid the day-to-day churn and
-    # regressions of the fast-paced Nim development while maintaining the
-    # flexibility to apply patches
+  # build nim from our own branch - this to avoid the day-to-day churn and
+  # regressions of the fast-paced Nim development while maintaining the
+  # flexibility to apply patches
   - SET "NEED_REBUILD="
 
   - IF NOT EXIST "Nim\\.git\\" (
