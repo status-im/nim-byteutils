@@ -95,3 +95,9 @@ func toHex*[N: static[int]](ba: array[N, byte]): string {.inline.} =
   ## Output is in lowercase
   ## No "endianness" reordering is done.
   toHexAux(ba)
+
+########################################################################################################
+#####################################   Base64 utilities   #############################################
+
+import ./byteutils/base64
+export base64

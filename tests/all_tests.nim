@@ -8,9 +8,15 @@
 import  unittest,
         ../byteutils
 
-suite "Your first test suite":
-  test "Your first test":
-    block: # independant block of subtest
-      discard
-    block:
-      discard
+suite "Base64":
+  let pwdBytes = hexToSeqByte"5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"
+  let pwdB64 = "XohImNooBHFR0OVvjcYpJ3NgPQ1qq73WKhHvch0VQtg="
+
+  test "Encoding":
+    block: # From https://crypto.stackexchange.com/questions/34995/why-do-we-use-hex-output-for-hash-functions
+      # Hex representation of sha256 of "password"
+      check: pwdBytes.toBase64 == pwdB64
+  test "Decoding":
+    block: # From https://crypto.stackexchange.com/questions/34995/why-do-we-use-hex-output-for-hash-functions
+      # Hex representation of sha256 of "password"
+      check: pwdBytes == pwdB64.base64toSeqByte
