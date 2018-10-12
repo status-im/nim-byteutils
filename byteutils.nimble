@@ -1,9 +1,8 @@
 packageName   = "byteutils"
 version       = "0.0.1"
 author        = "Status Research & Development GmbH"
-description   = ""
+description   = "Tools to work with raw bytes, hashes and memory blobs"
 license       = "MIT or Apache License 2.0"
-srcDir        = "src"
 
 ### Dependencies
 requires "nim >= 0.18.0"
