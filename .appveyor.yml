@@ -3,7 +3,7 @@
 version: '{build}'
 
 cache:
-- nim-0.18.0_x64.zip
+- nim-0.19.0_x64.zip
 - x86_64-4.9.2-release-win32-seh-rt_v4-rev4.7z
 - i686-4.9.2-release-win32-dwarf-rt_v4-rev4.7z
 - packages -> **\packages.config
@@ -18,17 +18,17 @@ environment:
       MINGW_DIR: mingw64
       # We need to hardcode a mirror otherwise the download fails
       MINGW_URL: https://ayera.dl.sourceforge.net/project/mingw-w64/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/4.9.2/threads-win32/seh/x86_64-4.9.2-release-win32-seh-rt_v4-rev4.7z
-      NIM_ARCHIVE: nim-0.18.0_x64.zip
-      NIM_DIR: nim-0.18.0
-      NIM_URL: https://nim-lang.org/download/nim-0.18.0_x64.zip
+      NIM_ARCHIVE: nim-0.19.0_x64.zip
+      NIM_DIR: nim-0.19.0
+      NIM_URL: https://nim-lang.org/download/nim-0.19.0_x64.zip
       platform: x64
     - MINGW_ARCHIVE: i686-4.9.2-release-win32-dwarf-rt_v4-rev4.7z
       MINGW_DIR: mingw32
       # We need to hardcode a mirror otherwise the download fails
       MINGW_URL: https://netcologne.dl.sourceforge.net/project/mingw-w64/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/4.9.2/threads-win32/dwarf/i686-4.9.2-release-win32-dwarf-rt_v4-rev4.7z
-      NIM_ARCHIVE: nim-0.18.0_x64.zip
-      NIM_DIR: nim-0.18.0
-      NIM_URL: https://nim-lang.org/download/nim-0.18.0_x32.zip
+      NIM_ARCHIVE: nim-0.19.0_x64.zip
+      NIM_DIR: nim-0.19.0
+      NIM_URL: https://nim-lang.org/download/nim-0.19.0_x32.zip
       platform: x86
 
 install:
@@ -46,7 +46,7 @@ build_script:
   - nimble.exe refresh
 
 test_script:
-  - git submodule update --init --recursive
+  # - git submodule update --init --recursive
   - nimble.exe test
 
 deploy: off
