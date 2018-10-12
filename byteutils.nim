@@ -11,13 +11,13 @@
 
 import algorithm
 
-proc initArrayWith*[N: static[int], T](value: T): array[N, T] {.noInit,inline, noSideEffect.}=
+func initArrayWith*[N: static[int], T](value: T): array[N, T] {.noInit,inline.}=
   result.fill(value)
 
-proc `&`*[N1, N2: static[int], T](
+func `&`*[N1, N2: static[int], T](
     a: array[N1, T],
     b: array[N2, T]
-    ): array[N1 + N2, T] {.noSideEffect, inline, noInit.}=
+    ): array[N1 + N2, T] {.inline, noInit.}=
   ## Array concatenation
   result[0 ..< N1] = a
   result[N1 ..< N2] = b
@@ -25,7 +25,7 @@ proc `&`*[N1, N2: static[int], T](
 ########################################################################################################
 #####################################   Hex utilities   ################################################
 
-proc readHexChar*(c: char): byte {.noSideEffect, inline.}=
+func readHexChar*(c: char): byte {.inline.}=
   ## Converts an hex char to a byte
   case c
   of '0'..'9': result = byte(ord(c) - ord('0'))
@@ -34,13 +34,13 @@ proc readHexChar*(c: char): byte {.noSideEffect, inline.}=
   else:
     raise newException(ValueError, $c & "is not a hexademical character")
 
-proc skip0xPrefix(hexStr: string): int {.noSideEffect, inline.} =
+func skip0xPrefix(hexStr: string): int {.inline.} =
   ## Returns the index of the first meaningful char in `hexStr` by skipping
   ## "0x" prefix
   if hexStr[0] == '0' and hexStr[1] in {'x', 'X'}:
     result = 2
 
-proc hexToByteArray*(hexStr: string, output: var openArray[byte], fromIdx, toIdx: int) {.noSideEffect.}=
+func hexToByteArray*(hexStr: string, output: var openArray[byte], fromIdx, toIdx: int) =
   ## Read a hex string and store it in a byte array `output`. No "endianness" reordering is done.
   var i = skip0xPrefix(hexStr)
 
@@ -53,15 +53,15 @@ proc hexToByteArray*(hexStr: string, output: var openArray[byte], fromIdx, toIdx
     output[fromIdx + i] = hexStr[2*i].readHexChar shl 4 or hexStr[2*i+1].readHexChar
     inc(i)
 
-proc hexToByteArray*(hexStr: string, output: var openArray[byte]) {.inline, noSideEffect.} =
+func hexToByteArray*(hexStr: string, output: var openArray[byte]) {.inline.} =
   ## Read a hex string and store it in a byte array `output`. No "endianness" reordering is done.
   hexToByteArray(hexStr, output, 0, output.high)
 
-proc hexToByteArray*[N: static[int]](hexStr: string): array[N, byte] {.noSideEffect, noInit, inline.}=
+func hexToByteArray*[N: static[int]](hexStr: string): array[N, byte] {.noInit, inline.}=
   ## Read an hex string and store it in a byte array. No "endianness" reordering is done.
   hexToByteArray(hexStr, result)
 
-proc hexToSeqByte*(hexStr: string): seq[byte] {.noSideEffect.}=
+func hexToSeqByte*(hexStr: string): seq[byte] =
   ## Read an hex string and store it in a sequence of bytes. No "endianness" reordering is done.
   var i = skip0xPrefix(hexStr)
 
@@ -72,7 +72,7 @@ proc hexToSeqByte*(hexStr: string): seq[byte] {.noSideEffect.}=
     result[i] = hexStr[2*i].readHexChar shl 4 or hexStr[2*i+1].readHexChar
     inc(i)
 
-proc toHexAux(ba: openarray[byte]): string {.noSideEffect.} =
+func toHexAux(ba: openarray[byte]): string =
   ## Convert a byte-array to its hex representation
   ## Output is in lowercase
   ## No "endianness" reordering is done.
@@ -84,13 +84,13 @@ proc toHexAux(ba: openarray[byte]): string {.noSideEffect.} =
     result[2*i] = hexChars[int ba[i] shr 4 and 0xF]
     result[2*i+1] = hexChars[int ba[i] and 0xF]
 
-proc toHex*(ba: openarray[byte]): string {.noSideEffect, inline.} =
+func toHex*(ba: openarray[byte]): string {.inline.} =
   ## Convert a byte-array to its hex representation
   ## Output is in lowercase
   ## No "endianness" reordering is done.
   toHexAux(ba)
 
-proc toHex*[N: static[int]](ba: array[N, byte]): string {.noSideEffect, inline.} =
+func toHex*[N: static[int]](ba: array[N, byte]): string {.inline.} =
   ## Convert a big endian byte-array to its hex representation
   ## Output is in lowercase
   ## No "endianness" reordering is done.
