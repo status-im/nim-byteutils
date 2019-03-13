@@ -16,8 +16,8 @@ proc test(name: string, defaultLang = "c") =
   if not dirExists "nimcache":
     mkDir "nimcache"
   --run
-  --nimcache:"nimcache"
-  --threads:"on"
+  --nimcache:nimcache
+  --threads:on
   switch("out", ("./build/" & name))
   setCommand defaultLang, "tests/" & name & ".nim"
 

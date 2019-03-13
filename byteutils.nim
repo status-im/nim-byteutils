@@ -45,10 +45,10 @@ func hexToByteArray*(hexStr: string, output: var openArray[byte], fromIdx, toIdx
   ## Allows specifying the byte range to process into the array
   var sIdx = skip0xPrefix(hexStr)
 
-  assert(fromIdx >= 0 and toIdx >= fromIdx and fromIdx < output.len and toIdx < output.len)
+  doAssert(fromIdx >= 0 and toIdx >= fromIdx and fromIdx < output.len and toIdx < output.len)
   let sz = toIdx - fromIdx + 1
 
-  assert hexStr.len - sIdx >= 2*sz
+  doAssert hexStr.len - sIdx >= 2*sz
 
   sIdx += fromIdx * 2
   for bIdx in fromIdx ..< sz + fromIdx:
