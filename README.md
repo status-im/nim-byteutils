@@ -1,5 +1,7 @@
 # byteutils
 
+**Deprecated - moved to https://github.com/status-im/nim-stew**
+
 [![Build Status (Travis)](https://img.shields.io/travis/status-im/nim-byteutils/master.svg?label=Linux%20/%20macOS "Linux/macOS build status (Travis)")](https://travis-ci.org/status-im/nim-byteutils)
 [![Windows build status (Appveyor)](https://img.shields.io/appveyor/ci/nimbus/nim-byteutils/master.svg?label=Windows "Windows build status (Appveyor)")](https://ci.appveyor.com/project/nimbus/nim-byteutils)
 [![License: Apache](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
